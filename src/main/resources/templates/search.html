@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Search Book</h1>
+<p><a href="/book-list">Back to list</a></p>
+<table border="1">
+    <tr>
+        <td>Code:</td>
+        <td>Price:</td>
+        <td>Status:</td>
+        <td>Company:</td>
+        <td>Number</td>
+        <td>Description</td>
+        <td>Category</td>
+        <td>Edit</td>
+        <td>Delete</td>
+    </tr>
+    <th:block th:each="book:${books}">
+        <tr>
+            <td th:text="${book.code}"></td>
+            <td th:text="${book.price}"></td>
+            <td th:text="${book.status}"></td>
+            <td th:text="${book.company}"></td>
+            <td th:text="${book.number}"></td>
+            <td th:text="${book.description}"></td>
+            <td th:text="${book.category.name}"></td>
+            <td><a th:href="@{book-edit/__${book.id}__}">Edit</a></td>
+            <td><a th:href="@{book-delete/__${book.id}__}">Delete</a></td>
+        </tr>
+    </th:block>
+</table>
+<a th:href="@{'/book-search'(page=${books.number - 1},code=${code})}" th:if="${books.hasPrevious()}">Previous</a>
+<span th:text="${books.number + 1}"></span>/<span th:text="${books.totalPages}"></span>
+<a th:href="@{'/book-search'(page=${books.number + 1},code=${code})}" th:if="${books.hasNext()}">Next</a>
+</body>
+</html>
